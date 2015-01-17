@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Environmental Data</title>
+    <link rel="stylesheet" href="style/main.css" type="text/css">
+  </head>
+  <body>
+    <h1>Environmental Data</h1>
+
+    <div id="content">
+        <div id="current"></div>
+        <div id="records"></div>
+    </div>
+
+    <div id="sidebar">
+        <p>Baby, it's cold outside</p>
+        <ul id="nav"></ul>
+    </div>
+  </body>
+  <script src="vendor/couchapp/sha1.js"></script>
+  <script src="vendor/couchapp/json2.js"></script>
+  <script src="vendor/couchapp/jquery.js"></script>
+  <script src="vendor/couchapp/jquery.couch.js"></script>
+  <script src="vendor/couchapp/jquery.couchLogin.js"></script>
+  <script src="vendor/couchapp/jquery.couchProfile.js"></script>
+  <script src="vendor/couchapp/md5.js"></script>
+  <script src="vendor/couchapp/jquery.mustache.js"></script>
+  <script src="vendor/couchapp/moment.min.js"></script>
+
+<!-- templates used by app.js -->
+  <script id="recent-messages" type="text/x-mustache" charset="utf-8">
+        <h3>Current Conditions</h3>
+        <ul id="items">
+            <li>
+              <p class="current-conditions-data">{{indoor_temp}}</p>
+              <p class="label">indoor temperature</p>
+            </li>
+            <li>
+              <p class="current-conditions-data">{{outdoor_temp}}</p>
+              <p class="label">outdoor temperature</p>
+            </li>
+            <li>
+              <p class="current-conditions-data">{{light}}</p>
+              <p class="label">light level</p>
+            </li>
+            <li>
+              <p class="current-conditions-data">{{pressure}}</p>
+              <p class="label">barometer</p>
+            </li>
+            <p>at: {{timestamp}}</p>
+        </ul>
+  </script>
+  
+  <script id="records-templ" type="text/x-mustache" charset="utf-8">
+      <h3>Records</h3>
+            <div>
+                <div>
+                    <h4>Indoor Temperature</h4>
+                    <p class="records-data">{{indoor_temp_record_max}}</p>
+                    <p class="label">at {{indoor_temp_record_max_timestamp}}</p>
+                    <p class="records-data">{{indoor_temp_record_min}}</p>
+                    <p class="label">at {{indoor_temp_record_min_timestamp}}</p>
+                </div>
+                <div>
+                    <h4>Outdoor Temperature</h4>
+                    <p class="records-data">{{outdoor_temp_record_max}}</p>
+                    <p class="label">at {{outdoor_temp_record_max_timestamp}}</p>
+                    <p class="records-data">{{outdoor_temp_record_min}}</p>
+                    <p class="label">at {{outdoor_temp_record_min_timestamp}}</p>
+                </div>
+            </div>
+  </script>
+  
+  <script id="navbar-templ" type="text/x-mustache" charset="utf-8">
+    <li><a href='_list/daily/recent-items?startkey="{{startkeyD}}"&endkey="{{endkeyD}}"'>Daily</a></li>
+    <li><a href='_list/weekly/hourly?group=true&startkey="{{startkeyW}}"&endkey="{{endkeyW}}"'>Weekly</a></li>
+    <li><a href='_list/monthly/daily?group=true&startkey="{{startkeyM}}"&endkey="{{endkeyM}}"'>Monthly</a></li>
+  </script>
+  
+  <script src="script/app.js"></script>
+
+</html>

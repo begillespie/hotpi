@@ -1,0 +1,7 @@
+[
+    {
+        "method":"GET",
+        "from":"/hotpi/",
+        "to":"_design/hotpi/index.html"
+    }
+]

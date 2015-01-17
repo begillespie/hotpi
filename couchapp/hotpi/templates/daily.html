@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <title>Daily : {{header_date}}</title>
+        <link rel="stylesheet" href="/hotpi/style/main.css" type="text/css">
+    </head>
+    <body>
+        <div id="navbar">
+            <ul>
+                <li><a href='/hotpi/_list/daily/recent-items?startkey="{{prev_link_start}}"&endkey="{{prev_link_end}}"'>previous</a></li>
+                <li class="title">{{header_date}}</li>
+                <li><a href='/hotpi/_list/daily/recent-items?startkey="{{next_link_start}}"&endkey="{{next_link_end}}"'>next</a></li>
+                <li><a href="/hotpi/index.html">Main</a></li>
+            </ul>
+        </div>
+        <div id="main">
+            <div id="chart-area"></div>
+            <div id="records">
+                <ul id="records-text">
+                    {{#records}}
+                        <li><h4>Indoor</h4></li>
+                        <li>High Temp: {{indoor_high}} at {{indoor_high_time}}</li>
+                        <li>Low Temp: {{indoor_low}} at {{indoor_low_time}}</li>
+                        <li><h4>Outdoor</h4></li>
+                        <li>High Temp: {{outdoor_high}} at {{outdoor_high_time}}</li>
+                        <li>Low Temp: {{outdoor_low}} at {{outdoor_low_time}}</li>
+                        <br>
+                        <li>High Pressure: {{pressure_high}} at {{pressure_high_time}}</li>
+                        <li>Low Pressure: {{pressure_low}} at {{pressure_low_time}}</li>
+                    {{/records}}
+                </ul>
+            </div>
+        </div>
+    </body>
+    <script src="/hotpi/vendor/couchapp/jquery.js"></script>
+
+    <!--Google Charts-->
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        
+          // Load the Visualization API and the piechart package.
+          google.load('visualization', '1.0', {'packages':['corechart']});
+          
+          // Set a callback to run when the Google Visualization API is loaded.
+          google.setOnLoadCallback(drawChart);
+
+          // Callback that creates and populates a data table, 
+          // instantiates the pie chart, passes in the data and
+          // draws it.
+          function drawChart() {
+              // Create the data table.
+              var data = new google.visualization.DataTable();
+              data.addColumn('datetime', 'Time');
+              data.addColumn('number', 'Indoor Temperature');
+              data.addColumn('number', 'Outdoor Temperature');
+              data.addColumn('number', 'Light Level');
+              data.addRows([
+                {{#temps}}
+                    [new Date({{timestamp}}), {{indoor_temp}}, {{outdoor_temp}}, {{light}}],
+                {{/temps}}
+                null]);
+          // Set chart options
+              var options = {   title:'Daily Temps',
+                                width:800,
+                                height:600,
+                                legend:{
+                                    position:'bottom'
+                                },
+                                vAxis:{
+                                    title: 'Deg F\n%Illum'
+                                }
+                            };
+        
+              // Instantiate and draw our chart, passing in some options.
+              var chart = new google.visualization.LineChart(document.getElementById('chart-area'));
+              chart.draw(data, options);
+           }
+    </script>
+
+</html>

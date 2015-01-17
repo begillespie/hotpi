@@ -1,0 +1,86 @@
+<html>
+    <head>
+        <title>Monthly - Calendar {{header-date}}</title>
+        <link rel="stylesheet" href="/hotpi/style/main.css" type="text/css">
+    </head>
+    <body>
+        <div id="main">
+            <div id="navbar">
+                <ul>
+                    <li><a href='/hotpi/_list/calendar/daily?group=true&startkey="{{prev_link_start}}"&endkey="{{prev_link_end}}"'>previous</a></li>
+                    <li class="title">{{header_date}}</li>
+                    <li><a href='/hotpi/_list/calendar/daily?group=true&startkey="{{next_link_start}}"&endkey="{{next_link_end}}"'>next</a></li>
+                    <li><a href='/hotpi/_list/monthly/daily?group=true&startkey="{{current_link_start}}"&endkey="{{current_link_end}}"'>Graph</a></li>
+                    <li><a href="/hotpi/index.html">Main</a></li>
+                </ul>
+            </div>
+            <div id="calendar">
+                <table>
+                    <tr>
+                        <th>Sunday</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                        <th>Saturday</th>
+                    </tr>
+                    {{#temps}}
+                    <tr>
+                        <td>
+                            <a href='/hotpi/_list/daily/recent-items?startkey="{{sunday.startkey}}"&endkey="{{sunday.endkey}}"'>
+                            <p class="date">{{sunday.date}}</p>
+                            <p>{{sunday.indoor_temp_max}}</p>
+                            <p>{{sunday.indoor_temp_min}}</p></a>
+                        </td>
+                        <td>
+                            <a href='/hotpi/_list/daily/recent-items?startkey="{{monday.startkey}}"&endkey="{{monday.endkey}}"'>
+                            <p class="date">{{monday.date}}</p>
+                            <p>{{monday.indoor_temp_max}}</p>
+                            <p>{{monday.indoor_temp_min}}</p></a>
+                        </td>
+                        <td>
+                            <a href='/hotpi/_list/daily/recent-items?startkey="{{tuesday.startkey}}"&endkey="{{tuesday.endkey}}"'>
+                            <p class="date">{{tuesday.date}}</p>
+                            <p>{{tuesday.indoor_temp_max}}</p>
+                            <p>{{tuesday.indoor_temp_min}}</p></a>
+                        </td>
+                        <td>
+                            <a href='/hotpi/_list/daily/recent-items?startkey="{{wednesday.startkey}}"&endkey="{{wednesday.endkey}}"'>
+                            <p class="date">{{wednesday.date}}</p>
+                            <p>{{wednesday.indoor_temp_max}}</p>
+                            <p>{{wednesday.indoor_temp_min}}</p></a>
+                        </td>
+                        <td>
+                            <a href='/hotpi/_list/daily/recent-items?startkey="{{thursday.startkey}}"&endkey="{{thursday.endkey}}"'>
+                            <p class="date">{{thursday.date}}</p>
+                            <p>{{thursday.indoor_temp_max}}</p>
+                            <p>{{thursday.indoor_temp_min}}</p></a>
+                        </td>
+                        <td>
+                            <a href='/hotpi/_list/daily/recent-items?startkey="{{friday.startkey}}"&endkey="{{friday.endkey}}"'>
+                            <p class="date">{{friday.date}}</p>
+                            <p>{{friday.indoor_temp_max}}</p>
+                            <p>{{friday.indoor_temp_min}}</p></a>
+                        </td>
+                        <td>
+                            <a href='/hotpi/_list/daily/recent-items?startkey="{{saturday.startkey}}"&endkey="{{saturday.endkey}}"'>
+                            <p class="date">{{saturday.date}}</p>
+                            <p>{{saturday.indoor_temp_max}}</p>
+                            <p>{{saturday.indoor_temp_min}}</p></a>
+                        </td>
+                    </tr>
+                    {{/temps}}
+                </table>
+            </div>
+            <div id="records">
+                <ul id="records-text">
+                    {{#records}}
+                        <li>high: {{indoor_high}} at {{indoor_high_time}}</li>
+                        <li>low: {{indoor_low}} at {{indoor_low_time}}</li>
+                    {{/records}}
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>
