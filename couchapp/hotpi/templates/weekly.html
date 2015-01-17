@@ -14,6 +14,7 @@
         </div>
         <div id="main">
             <div id="chart-area"></div>
+            <div id="pressure-chart-area"></div>
             <div id="records">
                 <ul id="records-text">
                     {{#records}}
@@ -23,6 +24,9 @@
                         <li><h4>Outdoor</h4></li>
                         <li>high: {{outdoor_high}} at {{outdoor_high_time}}</li>
                         <li>low: {{outdoor_low}} at {{outdoor_low_time}}</li>
+                        <br>
+                        <li>High Pressure: {{pressure_high}} at {{pressure_high_time}}</li>
+                        <li>Log Pressure: {{pressure_low}} at {{pressure_low_time}}</li>
                     {{/records}}
                 </ul>
             </div>
@@ -35,43 +39,66 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
         
-          // Load the Visualization API and the piechart package.
-          google.load('visualization', '1.0', {'packages':['corechart']});
-          
-          // Set a callback to run when the Google Visualization API is loaded.
-          google.setOnLoadCallback(drawChart);
-
-          // Callback that creates and populates a data table, 
-          // instantiates the pie chart, passes in the data and
-          // draws it.
-          function drawChart() {
-              // Create the data table.
-              var data = new google.visualization.DataTable();
-              data.addColumn('datetime', 'Time');
-              data.addColumn('number', 'Indoor Temperature');
-              data.addColumn('number', 'Outdoor Temperature');
-              data.addColumn('number', 'Light Level')
-              data.addRows([
+        // Load the Visualization API and the piechart package.
+        google.load('visualization', '1.0', {'packages':['corechart']});
+        
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.setOnLoadCallback(drawChart);
+        
+        // Callback that creates and populates a data table, 
+        // instantiates the pie chart, passes in the data and
+        // draws it.
+        function drawChart() {
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('datetime', 'Time');
+            data.addColumn('number', 'Indoor Temperature');
+            data.addColumn('number', 'Outdoor Temperature');
+            data.addColumn('number', 'Light Level');
+            data.addRows([
                 {{#temps}}
                     [new Date({{timestamp}}), {{indoor_temp}}, {{outdoor_temp}}, {{light}}],
                 {{/temps}}
-                null]);
-          // Set chart options
-              var options = {   title:'Daily Temps',
-                                width:800,
-                                height:600,
-                                legend:{
-                                    position:'bottom'
-                                },
-                                vAxis:{
-                                    title: 'Deg F\n%Illum'
-                                }
-                            };
+            null]);
+            
+            var pressure_data = new google.visualization.DataTable();
+            pressure_data.addColumn('datetime', 'Time');
+            pressure_data.addColumn('number', 'Pressure');
+            pressure_data.addRows([
+                {{#temps}}
+                    [new Date({{timestamp}}), {{pressure}}],
+                {{/temps}}
+            null]);
+            
+        // Set chart options
+            var options = {   title:'Daily Temps',
+                            width:800,
+                            height:600,
+                            legend:{
+                                position:'bottom'
+                            },
+                            vAxis:{
+                                title: 'Deg F\n%Illum'
+                            }
+                        };
+            
+            var pressure_options = {
+                            title: 'Barometric Pressure',
+                            width:800,
+                            height:600,
+                            legend:{
+                                position:'bottom'
+                            },
+                            vAxis:{
+                                title: 'inHg'
+                            }
+                        };
         
-              // Instantiate and draw our chart, passing in some options.
-              var chart = new google.visualization.LineChart(document.getElementById('chart-area'));
-              chart.draw(data, options);
-           }
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.LineChart(document.getElementById('chart-area'));
+            chart.draw(data, options);
+            var pressure_chart = new google.visualization.LineChart(document.getElementById('pressure-chart-area'));
+            pressure_chart.draw(pressure_data, pressure_options);
+        }
     </script>
-
 </html>
