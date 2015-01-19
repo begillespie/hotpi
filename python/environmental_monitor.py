@@ -9,7 +9,7 @@ import time, datetime, json
 import RPi.GPIO as GPIO
 import Adafruit_BMP.BMP085 as BMP085 # Adafruit digital temp/humidity sensor
 from config import config # Configuration file
-from lib import couchDB, mcp3008 # Custom libraries
+from mod import couchDB, mcp3008 # Custom libraries
 
 GPIO.setwarnings(False)
 
