@@ -70,8 +70,8 @@ $(function() {
         
         var keys = {
             // Set daily keys
-            startkeyD : moment().format(format),
-            endkeyD   : moment().add('d', 1).format(format),
+            startkeyD : moment().startOf('day').toArray(),
+            endkeyD   : moment().add('d', 1).startOf('day').toArray(),
             // Set weekly keys
             startkeyW : moment().startOf('week').toArray(),
             endkeyW   : moment().startOf('week').add('week', 1).toArray(),
