@@ -73,8 +73,8 @@ $(function() {
             startkeyD : moment().format(format),
             endkeyD   : moment().add('d', 1).format(format),
             // Set weekly keys
-            startkeyW : moment().startOf('week').format(format),
-            endkeyW   : moment().startOf('week').add('week', 1).format(format),
+            startkeyW : moment().startOf('week').toArray(),
+            endkeyW   : moment().startOf('week').add('week', 1).toArray(),
             // Set monthly keys
             startkeyM : moment().startOf('month').format(format),
             endkeyM   : moment().endOf('month').format(format)
