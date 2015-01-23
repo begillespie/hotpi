@@ -18,8 +18,8 @@ function(doc, req) {
                 'week' : m.week(),
                 'day'  : m.format('dddd').toLowerCase(),
                 'date' : m.date(),
-                'indoor_temp_min': row.value.indoor_temp_min,
-                'indoor_temp_max': row.value.indoor_temp_max
+                'indoor_temp_min': row.value.indoor_temp.min,
+                'indoor_temp_max': row.value.indoor_temp.max
             };
             rows.push(data);
         }
@@ -74,8 +74,8 @@ function(doc, req) {
                 'date': days[i].date,
                 'indoor_temp_min': in_min,
                 'indoor_temp_max': in_max,
-                'startkey': moment(days[i].key).format('YYYY-MM-DD[T00:00]'),
-                'endkey': moment(days[i].key).add('day', 1).format('YYYY-MM-DD[T00:00]')
+                'startkey': moment(days[i].key).toArray(),
+                'endkey': moment(days[i].key).add('day', 1).toArray()
             };
             if(days[i].day == 'saturday'){
                 temps.temps.push(week);

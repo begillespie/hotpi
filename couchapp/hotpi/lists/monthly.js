@@ -38,21 +38,21 @@ function(doc, req) {
             temps.temps.push(
                 {'timestamp': timestamp, 
                 // Round off the temperature for easy viewing
-                'indoor_temp_max': rows[i].value.indoor_temp_max.toFixed(2),
-                'indoor_temp_min': rows[i].value.indoor_temp_min.toFixed(2)}
+                'indoor_temp_max': rows[i].value.indoor_temp.max.toFixed(2),
+                'indoor_temp_min': rows[i].value.indoor_temp.min.toFixed(2)}
             );
         
-            if(rows[i].value.indoor_temp_max !== null){
+            if(rows[i].value.indoor_temp.max !== null){
                 // Compare the high temp
-                if(rows[i].value.indoor_temp_max > temps.records.indoor_high){
-                    temps.records.indoor_high = rows[i].value.indoor_temp_max;
+                if(rows[i].value.indoor_temp.max > temps.records.indoor_high){
+                    temps.records.indoor_high = rows[i].value.indoor_temp.max;
                     temps.records.indoor_high_time = moment(rows[i].key).format('MMM DD');
                 }
             }
-            if(rows[i].value.indoor_temp_min !== null){
+            if(rows[i].value.indoor_temp.min !== null){
                 // Compare the low temp
-                if(rows[i].value.indoor_temp_min < temps.records.indoor_low){
-                    temps.records.indoor_low = rows[i].value.indoor_temp_min;
+                if(rows[i].value.indoor_temp.min < temps.records.indoor_low){
+                    temps.records.indoor_low = rows[i].value.indoor_temp.min;
                     temps.records.indoor_low_time = moment(rows[i].key).format('MMM DD');
                 }
             }

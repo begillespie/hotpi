@@ -76,8 +76,8 @@ $(function() {
             startkeyW : moment().startOf('week').toArray(),
             endkeyW   : moment().startOf('week').add('week', 1).toArray(),
             // Set monthly keys
-            startkeyM : moment().startOf('month').format(format),
-            endkeyM   : moment().endOf('month').format(format)
+            startkeyM : moment().startOf('month').toArray(),
+            endkeyM   : moment().endOf('month').toArray()
             };
             
             var html = $.mustache(template, keys);
