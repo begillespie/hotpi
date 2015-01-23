@@ -18,11 +18,11 @@
                 d.date(),
                 d.hour(),
                 d.minute()];
-                
-            var in_temp  = rows[i].value.indoor_temp === null ? 'null' : Math.round(rows[i].value.indoor_temp);
-            var out_temp = rows[i].value.outdoor_temp === null  ? 'null' : Math.round(rows[i].value.outdoor_temp);
-            var light    = rows[i].value.light === null ? 'null' : (rows[i].value.light/1023)*100;
-            var pressure = rows[i].value.pressure === null ? 'null' : rows[i].value.pressure.toFixed(2);
+                        
+            var in_temp  = Math.round(rows[i].value.indoor_temp.sum / rows[i].value.indoor_temp.count);
+            var out_temp = Math.round(rows[i].value.outdoor_temp.sum / rows[i].value.outdoor_temp.count);
+            var light    = ((rows[i].value.light.sum / rows[i].value.light.count)/1023)*100;
+            var pressure = rows[i].value.pressure.sum / rows[i].value.pressure.count.toFixed(2);
             
             // Push chart data
                 temps.temps.push(
@@ -37,38 +37,38 @@
             
             if(rows[i].value.indoor_temp){
                 // Compare the high temp
-                if(rows[i].value.indoor_temp > temps.records.indoor_high){
-                    temps.records.indoor_high = rows[i].value.indoor_temp.toFixed(1);
+                if(rows[i].value.indoor_temp.max > temps.records.indoor_high){
+                    temps.records.indoor_high = rows[i].value.indoor_temp.max.toFixed(1);
                     temps.records.indoor_high_time = moment(rows[i].key).format('MMM DD h:mm a');
                 }
                 // Compare the low temp
-                if(rows[i].value.indoor_temp < temps.records.indoor_low){
-                    temps.records.indoor_low = rows[i].value.indoor_temp.toFixed(1);
+                if(rows[i].value.indoor_temp.min < temps.records.indoor_low){
+                    temps.records.indoor_low = rows[i].value.indoor_temp.min.toFixed(1);
                     temps.records.indoor_low_time = moment(rows[i].key).format('MMM DD h:mm a');
                 }
             }
             
             if(rows[i].value.outdoor_temp){
                 // Compare the high temp
-                if(rows[i].value.outdoor_temp > temps.records.outdoor_high){
-                    temps.records.outdoor_high = rows[i].value.outdoor_temp.toFixed(1);
+                if(rows[i].value.outdoor_temp.max > temps.records.outdoor_high){
+                    temps.records.outdoor_high = rows[i].value.outdoor_temp.max.toFixed(1);
                     temps.records.outdoor_high_time = moment(rows[i].key).format('MMM DD h:mm a');
                 }
                 // Compare the low temp
-                if(rows[i].value.outdoor_temp < temps.records.outdoor_low){
-                    temps.records.outdoor_low = rows[i].value.outdoor_temp.toFixed(1);
+                if(rows[i].value.outdoor_temp.min < temps.records.outdoor_low){
+                    temps.records.outdoor_low = rows[i].value.outdoor_temp.min.toFixed(1);
                     temps.records.outdoor_low_time = moment(rows[i].key).format('MMM DD h:mm a');
                 }
             }
             
             if(rows[i].value.pressure){
                 // Compare the barometer
-                if(rows[i].value.pressure < temps.records.pressure_low){
-                    temps.records.pressure_low = rows[i].value.pressure.toFixed(2);
+                if(rows[i].value.pressure.min < temps.records.pressure_low){
+                    temps.records.pressure_low = rows[i].value.pressure.min.toFixed(2);
                     temps.records.pressure_low_time = moment(rows[i].key).format('MM DD h:mm a');
                 }
-                if(rows[i].value.pressure > temps.records.pressure_high){
-                    temps.records.pressure_high = rows[i].value.pressure.toFixed(2);
+                if(rows[i].value.pressure.max > temps.records.pressure_high){
+                    temps.records.pressure_high = rows[i].value.pressure.max.toFixed(2);
                     temps.records.pressure_high_time = moment(rows[i].key).format('MM DD h:mm a');
                 }
             }

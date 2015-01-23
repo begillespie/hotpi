@@ -70,14 +70,14 @@ $(function() {
         
         var keys = {
             // Set daily keys
-            startkeyD : moment().format(format),
-            endkeyD   : moment().add('d', 1).format(format),
+            startkeyD : moment().startOf('day').toArray(),
+            endkeyD   : moment().add('d', 1).startOf('day').toArray(),
             // Set weekly keys
-            startkeyW : moment().startOf('week').format(format),
-            endkeyW   : moment().startOf('week').add('week', 1).format(format),
+            startkeyW : moment().startOf('week').toArray(),
+            endkeyW   : moment().startOf('week').add('week', 1).toArray(),
             // Set monthly keys
-            startkeyM : moment().startOf('month').format(format),
-            endkeyM   : moment().endOf('month').format(format)
+            startkeyM : moment().startOf('month').toArray(),
+            endkeyM   : moment().endOf('month').toArray()
             };
             
             var html = $.mustache(template, keys);

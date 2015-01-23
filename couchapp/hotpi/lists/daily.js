@@ -15,11 +15,11 @@ function(doc, req) {
         if(!rows[0]){return this.templates.error.nodata;}
         
         // build navigation header keys
-        temps.header_date     = moment(rows[0].key).format('MMM DD');
-        temps.prev_link_start = moment(rows[0].key).subtract('d', 1).format('YYYY-MM-DD[T00:00]');
-        temps.prev_link_end   = moment(rows[0].key).format('YYYY-MM-DD[T00:00]');
-        temps.next_link_start = moment(rows[0].key).add('d', 1).format('YYYY-MM-DD[T00:00]');
-        temps.next_link_end   = moment(rows[0].key).add('d', 2).format('YYYY-MM-DD[T00:00]');
+        temps.header_date     = moment(rows[0].key).format('MMM D, YYYY');
+        temps.prev_link_start = moment(rows[0].key).startOf('day').subtract('d', 1).toArray();
+        temps.prev_link_end   = moment(rows[0].key).startOf('day').toArray();
+        temps.next_link_start = moment(rows[0].key).startOf('day').add('d', 1).toArray();
+        temps.next_link_end   = moment(rows[0].key).startOf('day').add('d', 2).toArray();
         
         // !code lists/shared/graphlist.js
         return mustache.to_html(this.templates.daily, temps);
