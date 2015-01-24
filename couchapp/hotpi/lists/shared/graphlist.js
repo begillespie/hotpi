@@ -1,6 +1,19 @@
 // Shared code for generating graph data in the daily and weekly list fuctions        
+       // Load dependencies
+       
+        var mustache = require('vendor/couchapp/lib/mustache');
+        var moment = require('vendor/couchapp/lib/moment');
         
-        var num_rows = rows.length;
+        var rows = []; // Read in rows returned for processing
+        var temps = {'records':{},'temps': []}; // Constructor for our output
+        
+        while (row = getRow()) {
+            rows.push(row);
+        }
+        
+        // if the view didn't return any data, return an error page
+        if(!rows[0]){return this.templates.error.nodata;}        var num_rows = rows.length;
+        
         temps.records = {
             'indoor_high'   : -Infinity,
             'indoor_low'    : Infinity,
@@ -73,11 +86,3 @@
                 }
             }
         }
-        // Check for a valid value in the records and round the high/low values
-//        temps.records.indoor_high = temps.records.indoor_high ? temps.records.indoor_high.toFixed(1) : null;
-//        temps.records.indoor_low = temps.records.indoor_low ? temps.records.indoor_low.toFixed(1) : null;
-//        temps.records.outdoor_high = temps.records.outdoor_high ? temps.records.outdoor_high.toFixed(1) : null;
-//        temps.records.outdoor_low = temps.records.outdoor_low ? temps.records.outdoor_low.toFixed(1) : null;
-//        temps.records.pressure_high = temps.records.pressure_high ? temps.records.indoor_high.toFixed(2) : null;
-//        temps.records.pressure_low = temps.records.pressure_low ? temps.records.pressure_low.toFixed(2) : null;
-        
