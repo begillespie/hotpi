@@ -32,11 +32,11 @@
         <h3>Current Conditions</h3>
         <ul id="items">
             <li>
-              <p class="current-conditions-data">{{indoor_temp}}</p>
+              <p> <span class="current-conditions-data">{{indoor_temp}}</span> &deg;F</p>
               <p class="label">indoor temperature</p>
             </li>
             <li>
-              <p class="current-conditions-data">{{outdoor_temp}}</p>
+              <p> <span class="current-conditions-data">{{outdoor_temp}}</span> &deg;F</p>
               <p class="label">outdoor temperature</p>
             </li>
             <li>
@@ -44,7 +44,7 @@
               <p class="label">light level</p>
             </li>
             <li>
-              <p class="current-conditions-data">{{pressure}}</p>
+              <p> <span class="current-conditions-data">{{pressure}}</span> inHg</p>
               <p class="label">barometer</p>
             </li>
             <p>at: {{timestamp}}</p>
@@ -52,7 +52,7 @@
   </script>
   
   <script id="records-templ" type="text/x-mustache" charset="utf-8">
-      <h3>Records</h3>
+      <h2>Records</h2>
             <div>
                 <div>
                     <h4>Indoor Temperature</h4>

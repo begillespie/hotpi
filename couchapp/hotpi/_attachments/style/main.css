@@ -1,4 +1,9 @@
 /* add styles here */
+.current-conditions-data {
+    font-size: 300%;
+    font-weight: bold;
+    margin: 0;
+}
 
 body {
   font:1em Helvetica, sans-serif;
