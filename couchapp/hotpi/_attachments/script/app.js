@@ -36,7 +36,7 @@ $(function() {
                 var them = {
                     indoor_temp : data.rows[0].value.indoor_temp.toFixed(1),
                     outdoor_temp: data.rows[0].value.outdoor_temp.toFixed(1),
-                    light       : data.rows[0].value.light.toFixed(0),
+                    light       : (data.rows[0].value.light/10.23).toFixed(0),
                     pressure    : data.rows[0].value.pressure.toFixed(2),
                     timestamp   : moment(data.rows[0].key).format('LLLL')
                 };
