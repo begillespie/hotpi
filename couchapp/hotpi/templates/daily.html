@@ -48,6 +48,7 @@
         // Callback that creates and populates a data table, 
         // instantiates the pie chart, passes in the data and
         // draws it.
+        
         function drawChart() {
             // Create the data table.
             var data = new google.visualization.DataTable();
@@ -72,27 +73,34 @@
             
         // Set chart options
             var options = {   title:'Daily Temps',
-                            width:800,
-                            height:600,
+                              width:'100%',
+//                            width:800,
+                            height:400,
                             legend:{
                                 position:'bottom'
                             },
                             vAxis:{
-                                title: 'Deg F\n%Illum'
+                                title: 'Deg F\n%Illum',
+                                maxValue: 100
                             }
                         };
             
             var pressure_options = {
                             title: 'Barometric Pressure',
-                            width:800,
-                            height:600,
+                            width:'100%',
+//                            width:800,
+                            height:400,
                             legend:{
                                 position:'bottom'
                             },
                             vAxis:{
                                 title: 'inHg',
-                                minValue: 29,
-                                maxValue: 32
+//                                minValue: 29.0,
+//                                maxValue: 31,
+                                viewWindow:{
+                                    min:29,
+                                    max:31
+                                }
                             }
                         };
         
@@ -101,7 +109,39 @@
             chart.draw(data, options);
             var pressure_chart = new google.visualization.LineChart(document.getElementById('pressure-chart-area'));
             pressure_chart.draw(pressure_data, pressure_options);
+
+            // this script makes the charts responsive!
+            (function($,sr){
+              // debouncing function from John Hann
+              // http://unscriptable.com/index.php/2009/03/20/debouncing-javascript-methods/
+              var debounce = function (func, threshold, execAsap) {
+                  var timeout;
+            
+                  return function debounced () {
+                      var obj = this, args = arguments;
+                      function delayed () {
+                          if (!execAsap)
+                              func.apply(obj, args);
+                          timeout = null;
+                      };
+            
+                      if (timeout)
+                          clearTimeout(timeout);
+                      else if (execAsap)
+                          func.apply(obj, args);
+            
+                      timeout = setTimeout(delayed, threshold || 100);
+                  };
+              }
+              // smartresize 
+              jQuery.fn[sr] = function(fn){  return fn ? this.bind('resize', debounce(fn)) : this.trigger(sr); };
+            })(jQuery,'smartresize');
+
+            // usage:
+            $(window).smartresize(function(){
+                chart.draw(data, options);
+                pressure_chart.draw(pressure_data, pressure_options);
+            });
         }
     </script>
-
 </html>
