@@ -2,79 +2,104 @@
 <html>
   <head>
     <title>Environmental Data</title>
+    <link rel="stylesheet" href="vendor/couchapp/bootstrap-3.3.2-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="style/main.css" type="text/css">
   </head>
   <body>
-    <h1>Environmental Data</h1>
-
-    <div id="content">
-        <div id="current"></div>
-        <div id="records"></div>
-    </div>
-
-    <div id="sidebar">
-        <p>Baby, it's cold outside</p>
-        <ul id="nav"></ul>
+    <div class="container">
+        <div class="page-header">
+            <h1>Environmental Data</h1>
+        </div>
+        <div class="row">
+            <div class="sidebar col-md-4 col-md-push-8">
+                <p>Baby, it's cold outside</p>
+                <ul id="nav"></ul>
+            </div>
+            <div id="content" class="col-md-8 col-md-pull-4">
+                <div id="current"></div>
+                <div id="records" class="panel panel-default"></div>
+            </div>
+        </div>
     </div>
   </body>
   <script src="vendor/couchapp/sha1.js"></script>
   <script src="vendor/couchapp/json2.js"></script>
   <script src="vendor/couchapp/jquery.js"></script>
+  <script src="vendor/couchapp/jquery-migrate-1.2.1.min.js"></script>
   <script src="vendor/couchapp/jquery.couch.js"></script>
   <script src="vendor/couchapp/jquery.couchLogin.js"></script>
   <script src="vendor/couchapp/jquery.couchProfile.js"></script>
   <script src="vendor/couchapp/md5.js"></script>
+  <script src="vendor/couchapp/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
   <script src="vendor/couchapp/jquery.mustache.js"></script>
   <script src="vendor/couchapp/moment.min.js"></script>
 
 <!-- templates used by app.js -->
   <script id="recent-messages" type="text/x-mustache" charset="utf-8">
-        <h3>Current Conditions</h3>
-        <ul id="items">
-            <li>
-              <p> <span class="current-conditions-data">{{indoor_temp}}</span> &deg;F</p>
-              <p class="label">indoor temperature</p>
-            </li>
-            <li>
-              <p> <span class="current-conditions-data">{{outdoor_temp}}</span> &deg;F</p>
-              <p class="label">outdoor temperature</p>
-            </li>
-            <li>
-              <p> <span class="current-conditions-data">{{light}}</span> %</p>
-              <p class="label">light level</p>
-            </li>
-            <li>
-              <p> <span class="current-conditions-data">{{pressure}}</span> inHg</p>
-              <p class="label">barometer</p>
-            </li>
-            <p>at: {{timestamp}}</p>
-        </ul>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Current Conditions</h2>
+        </div>
+        <div class="row">
+                <div class="col-sm-6 well well-lg">
+                  <p> <span class="current-conditions-data">{{indoor_temp}}</span> &deg;F</p>
+                  <p class="label label-default">indoor temperature</p>
+                </div>
+                <div class="col-sm-6 well well-lg">
+                  <p> <span class="current-conditions-data">{{outdoor_temp}}</span> &deg;F</p>
+                  <p class="label label-default">outdoor temperature</p>
+                </div>
+        </div>
+        <div class="row">
+                <div class="col-sm-6 well well-lg">
+                  <p> <span class="current-conditions-data">{{light}}</span> %</p>
+                  <p class="label label-default">light level</p>
+                </div>
+                <div class="col-sm-6 well well-lg">
+                  <p> <span class="current-conditions-data">{{pressure}}</span> inHg</p>
+                  <p class="label label-default">barometer</p>
+                </div>
+                <div class="col-md-12">
+                    <p>at: {{timestamp}}</p>
+                </div>
+        </div>
+    </div>
   </script>
   
   <script id="records-templ" type="text/x-mustache" charset="utf-8">
-      <h2>Records</h2>
+        <div class="panel-heading">
+            <h2 class="panel-title">Records</h2>
+        </div>
+        <div class="panel-body">
             <div>
-                <div>
-                    <h4>Indoor Temperature</h4>
-                    <p class="records-data">{{indoor_temp_record_max}}</p>
-                    <p class="label">at {{indoor_temp_record_max_timestamp}}</p>
-                    <p class="records-data">{{indoor_temp_record_min}}</p>
-                    <p class="label">at {{indoor_temp_record_min_timestamp}}</p>
+                <h4>Indoor Temperature</h4>
+                <div class="well well-sm">
+                    <p> <span class="records-data">{{indoor_temp_record_max}}</span> &deg;F</p>
+                    <p class="label label-default">at {{indoor_temp_record_max_timestamp}}</p>
                 </div>
-                <div>
-                    <h4>Outdoor Temperature</h4>
-                    <p class="records-data">{{outdoor_temp_record_max}}</p>
-                    <p class="label">at {{outdoor_temp_record_max_timestamp}}</p>
-                    <p class="records-data">{{outdoor_temp_record_min}}</p>
-                    <p class="label">at {{outdoor_temp_record_min_timestamp}}</p>
+                <div class="well well-sm">
+                    <p> <span class="records-data">{{indoor_temp_record_min}}</span> &deg;F</p>
+                    <p class="label label-default">at {{indoor_temp_record_min_timestamp}}</p>
                 </div>
             </div>
+            <div>
+                <h4>Outdoor Temperature</h4>
+                <div class="well well-sm">
+                    <p> <span class="records-data">{{outdoor_temp_record_max}}</span> &deg;F</p>
+                    <p class="label label-default">at {{outdoor_temp_record_max_timestamp}}</p>
+                </div>
+                <div class="well well-sm">
+                    <p> <span class="records-data">{{outdoor_temp_record_min}}</span> &deg;F</p>
+                    <p class="label label-default">at {{outdoor_temp_record_min_timestamp}}</p>
+                </div>
+            </div>
+        </div>
   </script>
   
   <script id="navbar-templ" type="text/x-mustache" charset="utf-8">
-    <li><a href='_list/daily/stats?group_level=6&startkey=[{{startkeyD}}]&endkey=[{{endkeyD}}]'>Daily</a></li>
-    <li><a href='_list/weekly/stats?group_level=4&startkey=[{{startkeyW}}]&endkey=[{{endkeyW}}]'>Weekly</a></li>
-    <li><a href='_list/monthly/stats?group_level=3&startkey=[{{startkeyM}}]&endkey=[{{endkeyM}}]'>Monthly</a></li>
+    <li><a class="btn btn-default btn-block" href='_list/daily/stats?group_level=6&startkey=[{{startkeyD}}]&endkey=[{{endkeyD}}]'>Daily</a></li>
+    <li><a class="btn btn-default btn-block" href='_list/weekly/stats?group_level=4&startkey=[{{startkeyW}}]&endkey=[{{endkeyW}}]'>Weekly</a></li>
+    <li><a class="btn btn-default btn-block" href='_list/monthly/stats?group_level=3&startkey=[{{startkeyM}}]&endkey=[{{endkeyM}}]'>Monthly</a></li>
   </script>
   
   <script src="script/app.js"></script>
